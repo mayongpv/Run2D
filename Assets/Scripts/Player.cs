@@ -22,12 +22,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         transform.Translate(speed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            rigid.velocity = Vector2.zero;
             rigid.AddForce(jumpForce);
         }
         float velocity = rigid.velocity.y;
@@ -50,26 +49,29 @@ public class Player : MonoBehaviour
             if (absVelocity < midAirVelocity)
                 animationName = "Jump_MidAir";
 
-            else if (absVelocity > 0)
+            else if (velocity > 0)
                 animationName = "Jump_Up";
 
             else //하락
                 animationName = "Jump_Fall";
-
-            animator.Play(animationName);
         }
+
+        animator.Play(animationName);
     }
 
     public Transform rayStart;
     public float rayCheckDistance = 0.1f;
     public LayerMask groundLayer;
 
-
     private bool IsGround()
     {
-        RaycastHit2D hit = Physics2D.Raycast(rayStart.position, Vector2.down, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(rayStart.position, Vector2.down,  rayCheckDistance, groundLayer);
 
         return hit.transform != null;
 
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(rayStart.position, Vector2.down * rayCheckDistance);
     }
 }
