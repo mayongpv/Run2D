@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         else
         {
             if (absVelocity < midAirVelocity)
-                animationName = "Jump_MidAir";
+                animationName = "Jump_MidAir"; 
 
             else if (velocity > 0)
                 animationName = "Jump_Up"; //스펠링 체크 
