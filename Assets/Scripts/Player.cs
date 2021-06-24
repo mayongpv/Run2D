@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
         string animationName = "";
         if (IsGround())
         {
-            animationName = "Run";
+            animationName = "Run"; 
         }
         else
         {
