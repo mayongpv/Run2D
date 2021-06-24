@@ -30,7 +30,7 @@ public class ObjectPool : MonoBehaviour
             newItem.SetActive(false);
             newItem.transform.parent = parent;
 
-            if (items.Find(x => x == newItem) == null)
+            if (items.Find(x => x == newItem) == null) //같은 아이템이 있는지, null 이면 없는 것
                 items.Add(newItem);
         }
 
@@ -52,7 +52,7 @@ public class ObjectPool : MonoBehaviour
             }
             result = items[0];
             items.Remove(result);
-            result.transform.parent = null;
+            result.transform.parent = null; //부모를 해제한다는 코드
             result.SetActive(true);
 
             result.transform.SetPositionAndRotation(
@@ -74,7 +74,7 @@ public class ObjectPool : MonoBehaviour
     {
         return instance.InstantiateGo(go);
     }
-
+    //여기까지 생성 코드
     new public static void Destroy(Object obj, float t)
     {
         instance.DestroyGo(obj, t);
@@ -104,9 +104,10 @@ public class ObjectPool : MonoBehaviour
     private IEnumerator DestroyGoCo(GameObject original, float t)
     {
         yield return new WaitForSeconds(t);
-
+        //파괴 = 오브젝트풀에 넣는다는 이야기. 그러니 넣을 걸 찾는다.
         PoolItemInfo find = pool.Find(x => x.name == original.name);
         if (find != null)
             find.Push(original);
+        //find?.Push(original); // 위 두줄이랑 같음
     }
 }
