@@ -1,12 +1,28 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class RunGameManager : MonoBehaviour
 {
+    public static RunGameManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     TextMeshProUGUI timeText;
+    TextMeshProUGUI pointText;
     public int waitForSecond = 3;
+
+
+    [SerializeField] int point; //int 는 프라이빗이지만, 시리얼라이즈필드를 하면 인스펙터창에서 볼 수 있다.
+    internal void AddCoin(int addPoint)
+    {
+        point += addPoint;
+        pointText.text = point.ToString();
+    }
+
     IEnumerator Start()
     {
         //캐릭터랑 카메라랑 멈춰야 한다.
@@ -26,15 +42,21 @@ public class RunGameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         timeText.text = "";
 
-
     }
+
+    internal static bool IsPlaying()
+    {
+        return instance.gameStateType == GameStateType.Playing;
+    }
+
     public GameStateType gameStateType = GameStateType.NotInit;
+
     public enum GameStateType
-    { 
+    {
         NotInit, //아직 초기화되지 않았다는 뜻
-    Ready,
-    Playing,
-    End,
+        Ready,
+        Playing,
+        End,
 
     }
     //게임이 시작전인가?
@@ -44,6 +66,6 @@ public class RunGameManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

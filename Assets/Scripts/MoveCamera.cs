@@ -8,6 +8,9 @@ public class MoveCamera : MonoBehaviour
 
     private void Update()
     {
+        if (RunGameManager.IsPlaying() == false)
+            return;
+
         transform.Translate(speed * Time.deltaTime, 0, 0);   
     }
 }

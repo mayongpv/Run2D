@@ -3,6 +3,9 @@
 
 public class Player : MonoBehaviour
 {
+
+
+    RunGameManager runGameManager;
     Animator animator;
     Rigidbody2D rigid;
     public Vector2 jumpForce = new Vector2(0, 1000);
@@ -10,11 +13,15 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        //RunGameManager = GameObject.Find("Canvas").GetComponent<RunGameManager>();
+        //runGameManager = FindObjectOfType<RunGameManager>(); //모든 오브젝트를 찾아보는 것. 둘 다 부화가 있다.
+        runGameManager = RunGameManager.instance; 
+
         //animator = transform.Find("Sprite").GetComponent<Animator>();
         animator = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         rigid.gravityScale = gravityScale;
-        animator.Play("Run");
+        //animator.Play("Run");
 
     }
     public float midAirVelocity = 10;
@@ -22,6 +29,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (RunGameManager.IsPlaying() == false)
+            return;
+
+
         transform.Translate(speed * Time.deltaTime, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -42,12 +53,12 @@ public class Player : MonoBehaviour
         string animationName = "";
         if (IsGround())
         {
-            animationName = "Run"; 
+            animationName = "Run";
         }
         else
         {
             if (absVelocity < midAirVelocity)
-                animationName = "Jump_MidAir";  
+                animationName = "Jump_MidAir";
 
             else if (velocity > 0)
                 animationName = "Jump_Up"; //스펠링 체크 
@@ -57,6 +68,11 @@ public class Player : MonoBehaviour
         }
 
         animator.Play(animationName);
+    }
+
+    private static bool IsPlaying()
+    {
+        return RunGameManager.IsPlaying();
     }
 
     public Transform rayStart;
