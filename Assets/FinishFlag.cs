@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class FinishFlag : MonoBehaviour
 {
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        RunGameManager.instance.EndStage();
+        if (collision.transform.GetComponent<Player>() == null)
+            return;
 
+        RunGameManager.instance.EndStage();
     }
 }
