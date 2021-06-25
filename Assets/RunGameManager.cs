@@ -29,8 +29,10 @@ public class RunGameManager : MonoBehaviour
 
         gameStateType = GameStateType.Ready;
         //3, 2, 1, Start 표시
-        transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
-        for (int i = waitForSecond; i < 0; i--)
+        pointText = transform.Find("PointText").GetComponent<TextMeshProUGUI>();
+        
+        timeText = transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
+        for (int i = waitForSecond; i > 0; i--)
         {
             timeText.text = i.ToString();
             yield return new WaitForSeconds(1);
