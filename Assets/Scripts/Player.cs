@@ -41,8 +41,17 @@ public class Player : MonoBehaviour
         if (RunGameManager.IsPlaying() == false)
             return;
 
-
         transform.Translate(speed * Time.deltaTime, 0, 0);
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            transform.Find("MagnetAbility").gameObject.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            transform.Find("MagnetAbility").gameObject.SetActive(false);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
