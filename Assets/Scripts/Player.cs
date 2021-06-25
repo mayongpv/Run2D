@@ -17,34 +17,18 @@ public class Player : MonoBehaviour
 
     internal void OnEndStage()
     {
-        animator.Play("Idle");
+        animator.Play("Positive");
+   
     }
 
     void Start()
     {
-
         //animator = transform.Find("Sprite").GetComponent<Animator>();
         animator = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         rigid.gravityScale = gravityScale;
-
         //animator.Play("Run");
-        camerTr = Camera.main.transform;
     }
-
-    public Transform camerTr;
-    public float offsetXcameraPos; //카메라와 나의 차이 기본값
-    public float allowOffsetX = 0.2f;
-
-    public void RestoreXPosition()
-    {
-        float offsetX = camerTr.position.x - transform.position.x;
-        if (offsetX > offsetXcameraPos + allowOffsetX)
-        { 
-        //위치를 수정한다.
-        }
-    }
-
     public float speed = 20;
     public float midAirVelocity = 10;
     void Update()
@@ -96,7 +80,7 @@ public class Player : MonoBehaviour
         animator.Play(animationName);
     }
 
-    
+
 
     public Transform rayStart;
     public float rayCheckDistance = 0.1f;
