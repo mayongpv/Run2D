@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,14 @@ public class RunGameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    internal void EndStage()
+    {
+        gameStateType = GameStateType.End;
+        Player.instance.OnEndStage();
+        timeText.text = "Clear";
+
     }
 
     TextMeshProUGUI timeText;

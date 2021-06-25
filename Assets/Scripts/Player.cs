@@ -4,13 +4,22 @@
 public class Player : MonoBehaviour
 {
 
-
+    public static Player instance;
     RunGameManager runGameManager;
     Animator animator;
     Rigidbody2D rigid;
     public Vector2 jumpForce = new Vector2(0, 1000);
     public float gravityScale = 7;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    internal void OnEndStage()
+    {
+        animator.Play("Idle");
+    }
     void Start()
     {
         //RunGameManager = GameObject.Find("Canvas").GetComponent<RunGameManager>();
