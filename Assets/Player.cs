@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         rigid.gravityScale = gravityScale;
-        animator.Play("Run");
+        animator.Play("Run"); 
 
     }
 
