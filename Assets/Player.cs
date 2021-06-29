@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     int jumpCount = 0;
     void Update()
     {
-        if (state != StateType.Attack)
+        if (state != StateType.IdleOrRunOrJump)
         {
             Move();
             Jump();
@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
     float moveX;
     private void UpdateSprite()
     {
-        if (state == StateType.Attack)
+        if (state != StateType.IdleOrRunOrJump)
             return;
 
         float velocity = rigid.velocity.y;
@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
             if (absVelocity < midAirVelocity)
                 animationName = "Jump_MidAir";
             else if (velocity > 0)
-                animationName = "Jump_Up";               //상승. 
+                animationName = "Jump";               //상승. 
             else//하락
             {
                 animationName = "Jump_Fall";
@@ -194,5 +194,22 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(rayStart.position, Vector2.down * rayCheckDistance);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Monster monster = collision.gameObject.GetComponent<Monster>();
+        if (monster == null)
+            return;
+
+        hitpoint -= monster.damage;
+
+        StartCoroutine(HitCo());
+
+    }
+
+    private string HitCo()
+    {
+        throw new NotImplementedException();
     }
 }
